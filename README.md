@@ -1,2 +1,0 @@
-# skill
-mathmodeling_skill
