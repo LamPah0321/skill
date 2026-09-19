@@ -157,6 +157,32 @@ Blocking issues:
 - hidden limitation that affects the conclusion
 - conclusion exceeds evidence
 
+## Contest format compliance (华为杯 official spec)
+
+Source: `skills-docs/contest-paper-format-huaweibei.md` (23rd edition, 2026-09-16).
+These are submission-blocking; a single failure blocks assembly.
+
+Check:
+
+- [ ] Paper solves exactly one of problems A–F (no cross-problem mixing).
+- [ ] Page 1 is the abstract page (title + abstract + keywords); body starts on the next page.
+- [ ] No page header anywhere.
+- [ ] No author-identifying mark (name, school, ID, team number, advisor, identifiable acknowledgements).
+- [ ] Page numbers start on the abstract page, centered in the footer, Arabic numerals from 1.
+- [ ] Title is 三号黑体 centered; every first-level heading is 四号黑体 centered; all other Chinese text is 小四号宋体; single line spacing.
+- [ ] Abstract covers 建模思路 / 主要方法 / 模型 / 结果与结论 / 创新点 / 关键词; length ≤ 2 pages; no English abstract appended.
+- [ ] In-text citations are bracketed numbers `[1][3]`, listed in order of first appearance.
+- [ ] Book citations include page numbers.
+- [ ] Final reference list uses the three official Chinese formats (book / journal / web resource); cited programs note their source.
+
+Blocking issues:
+
+- any author-identifying mark (anonymity violation)
+- header present, or page numbers missing / not starting at 1 / not centered in footer
+- wrong fonts, sizes, or line spacing versus the spec
+- abstract missing any of the six required elements, longer than two pages, or carrying an English abstract
+- references not in order of first appearance, book citations without page numbers, or a reference list not using the three official Chinese formats
+
 ## Anti-fabrication
 
 Check:

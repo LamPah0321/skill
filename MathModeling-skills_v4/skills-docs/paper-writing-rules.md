@@ -4,6 +4,21 @@ This document gives writing rules for mathematical modeling contest papers gener
 
 The paper should describe what was actually done. It should not describe a cleaner or more impressive workflow than the one supported by artifacts.
 
+## Contest paper format (official 华为杯 spec)
+
+For "华为杯" Chinese graduate mathematical modeling contests, all physical formatting follows
+[`contest-paper-format-huaweibei.md`](./contest-paper-format-huaweibei.md) (23rd edition, 2026-09-16).
+That file is the single source of truth for layout; the hard rules that affect writing are:
+
+- First page is the **abstract page** (title + abstract + keywords); body starts on the next page.
+- **No header**; no author-identifying marks anywhere (anonymized).
+- Page numbers start on the abstract page, centered in the footer, Arabic numerals from 1.
+- Fonts: title 三号黑体 centered, first-level headings 四号黑体 centered, all other Chinese text 小四号宋体, single line spacing.
+- Abstract must cover 建模思路 / 主要方法 / 模型 / 结果与结论 / 创新点 / 关键词; ≤ 2 pages; **no English abstract**.
+- In-text citations are bracketed numbers `[1][3]`, references listed in order of first appearance; book citations must include page numbers; the final reference list must use the three official Chinese formats (book / journal / web resource); cited programs must note their source.
+
+When these rules conflict with any earlier generic convention, the official spec wins.
+
 ## Basic rule
 
 Write from artifacts.
@@ -42,14 +57,17 @@ If evidence is missing, mark the section incomplete.
 
 ### Abstract
 
-The abstract should summarize:
+The abstract must cover (official 华为杯 spec):
 
-- the problem
-- the methods actually used
-- the main results that exist
-- robustness evidence if available
-- final conclusions
+- 建模思路 (modeling idea)
+- 主要方法 (main methods actually used)
+- 模型 (models)
+- 结果与结论 (main results that exist + final conclusions)
+- 创新点 (innovations)
+- 关键词 (keywords)
 
+Keep it concise, generally no more than two pages. Do not add an English abstract.
+Include robustness evidence if available.
 Do not include unsupported numbers or claims.
 
 ### Problem restatement
@@ -189,6 +207,19 @@ Link limitations to:
 Every conclusion should answer a subquestion.
 
 Do not introduce new claims in the conclusion.
+
+### **References**
+
+Follow the official 华为杯 reference rules (see `contest-paper-format-huaweibei.md`):
+
+- In-text citations use bracketed numbers `[1][3]`, in order of first appearance.
+- Book citations must include page numbers.
+- Listed references use the three Chinese formats:
+  - Book: `[编号] 作者，书名，出版地：出版社，起止页码，出版年。`
+  - Journal: `[编号] 作者，论文名，杂志名，卷期号：起止页码，出版年。`
+  - Web resource: `[编号] 作者，资源标题，网址，访问时间（年月日）。`
+- Cited programs must note their source.
+- Do not paste raw English BibTeX styling into the final list.
 
 ## **Style**
 

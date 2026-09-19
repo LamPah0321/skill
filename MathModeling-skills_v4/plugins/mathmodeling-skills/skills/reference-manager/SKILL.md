@@ -180,6 +180,25 @@ Use or request:
 - Do not add "impressive-looking" references that were not actually consulted.
 - References should primarily support the methodology; avoid padding the reference list.
 
+# Official 华为杯 reference format (final list)
+
+BibTeX (`paper/refs.bib`) is used for inventory, dedup, and fabrication checks, but the
+**reference list actually rendered in the paper must follow the official spec**
+(`skills-docs/contest-paper-format-huaweibei.md`, 23rd edition, 2026-09-16):
+
+- In-text citations use **bracketed numbers** `[1][3]`, in the order they first appear in the text.
+- References are numbered and listed strictly in that order of first appearance (not alphabetical, not by year).
+- **Book citations must include page numbers** (quoted pages).
+- The three required display formats:
+  - Book: `[编号] 作者，书名，出版地：出版社，起止页码，出版年。`
+  - Journal: `[编号] 作者，论文名，杂志名，卷期号：起止页码，出版年。`
+  - Web resource: `[编号] 作者，资源标题，网址，访问时间（年月日）。`
+- Cited programs/code must note their source (e.g. an open-source repository or author).
+- Do **not** paste raw English BibTeX styling (`Journal, vol. 149, no. 2, pp. ..., 2023.`) into the final list.
+
+In the reference audit report, add a "Final-list format check" column verifying each entry
+matches one of the three Chinese formats and that numbering matches in-text order.
+
 # Rules
 
 - Do not fabricate references, metadata, or DOIs.
@@ -201,6 +220,7 @@ Before handing off, verify:
 - Potential fabrication risks are reported.
 - Missing citation suggestions are provided.
 - The BibTeX file is syntactically valid.
+- The rendered reference list follows the official 华为杯 formats: bracketed `[n]` in order of first appearance, books include page numbers, and each entry matches the book/journal/web Chinese format; cited programs note their source.
 
 # Failure modes
 
