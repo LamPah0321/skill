@@ -1,21 +1,3 @@
-<p align="center">
-  <img src="docs/assets/logo.svg" alt="MathModeling-skills" width="640"/>
-</p>
-
-<p align="center">
-  <a href="./README.md"><b>English</b></a> ·
-  <a href="./README-zh.md">简体中文</a> ·
-  <a href="./CLAUDE.md">Project Rules</a> ·
-  <a href="./Initial%20Prompt.md">Initial Prompt</a> ·
-  <a href="mailto:zjzhang0424@gmail.com">📧 Contact</a>
-</p>
-
-<p align="center">
-  <img alt="License" src="https://img.shields.io/badge/license-MIT-2E9E44">
-  <img alt="Skills" src="https://img.shields.io/badge/skills-28-1A6FC4">
-  <img alt="Claude Code" src="https://img.shields.io/badge/Claude%20Code-supported-E28E2C">
-  <img alt="Codex" src="https://img.shields.io/badge/Codex-supported-E28E2C">
-</p>
 
 ---
 
@@ -266,9 +248,7 @@ A few hard rules: `data_raw/` is read-only. Every paper number lives in `frozen_
 - [docs/matlab-beita-tianyuan-guidelines.md](docs/matlab-beita-tianyuan-guidelines.md) — keeping MATLAB code runnable in the contest environment.
 - Per-skill: [.claude/skills/](.claude/skills/) · [.codex/skills/](.codex/skills/).
 
-## Contact
 
-For a bug, an idea, or feedback from a real contest, email **[zjzhang0424@gmail.com](mailto:zjzhang0424@gmail.com)**. Issues and PRs are welcome too.
 
 ## Acknowledgments
 
