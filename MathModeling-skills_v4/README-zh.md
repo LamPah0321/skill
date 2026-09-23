@@ -1,82 +1,3 @@
-<p align="center">
-  <img src="docs/assets/logo.svg" alt="MathModeling-skills" width="640"/>
-</p>
-<p align="center">
-  <a href="./README.md">English</a> ·
-  <a href="./README-zh.md"><b>简体中文</b></a> ·
-  <a href="./CLAUDE.md">项目规则</a> ·
-  <a href="./Initial%20Prompt-zh.md">Initial Prompt</a> ·
-  <a href="mailto:zjzhang0424@gmail.com">📧 联系方式</a>
-</p>
-
-
-<p align="center">
-  <img alt="License" src="https://img.shields.io/badge/license-MIT-2E9E44">
-  <img alt="Skills" src="https://img.shields.io/badge/skills-28-1A6FC4">
-  <img alt="Claude Code" src="https://img.shields.io/badge/Claude%20Code-supported-E28E2C">
-  <img alt="Codex" src="https://img.shields.io/badge/Codex-supported-E28E2C">
-</p>
-
----
-
-> [!NOTE]
-> **本次更新 — 从「自动驾驶」改回「skills辅助」。** 先前版本会把整场比赛从头跑到尾，使用者只需要点「确认」，这其实更接近全程代写：既不符合多数赛事的规则，也无助于使用者自身能力的提升。这一版把关键判断重新交还给使用者，让 skills 回到辅助的位置——在它的协助下，主导仍然是使用者本人。
->
-> skill 数量从 24 增加到 28。原先的全自动版本完整保留在 [**`legacy-full-auto`**](https://github.com/zhnnky329/MathModeling-skills/tree/legacy-full-auto) 分支，需要旧版本可以直接切换过去。
-
-> 使用过程中遇到 bug，或想反馈比赛中的真实体验，欢迎发邮件至 **[zjzhang0424@gmail.com](mailto:zjzhang0424@gmail.com)**，也欢迎直接提 issue。
-
-## 项目初心
-
-数模翻车的真正原因，基本不是"不会模型"，而出现在以下几类常见问题：
-
-- 题目其实问的是 A，队伍理解成了 B；
-- 不跑 baseline 就直接上复杂模型，最后没人能解释为什么这么做；
-- 论文里写了个数字，但回过头查，没有任何一个脚本输出过这个数；
-- 截止前一晚改了个 bug，论文里还是 bug 修复前的旧数字。
-
-这些不是建模能力的问题，是流程的问题。这一套 skills 就是按"让这几种漂移很难悄悄发生"的思路排出来的。
-
-## 和常见做法的区别
-
-| | 常见做法 | 这套流程 |
-|---|---|---|
-| 如何推进到下一步 | 这一步做完就接着做下一步 | 每道 gate 有明确的通过条件，不通过则后续产物全部标记为 stale |
-| 方法的选择 | AI 选好方法，连理由一起写了 | 使用者先选择取向；AI 筛选主方法、可信 baseline 和最多一个条件性备用；再由使用者拍板（Gate G2.5） |
-| 从想法到代码 | 数学上说得通就算可行 | 风险探针检查数据覆盖、关键假设、输出集中/退化、扰动敏感性和规模（Gate G2） |
-| 代码审查 | 一句"看着没问题"带过 | JSON review 必须通过语法、输入契约、方法对齐、可复现性、输出契约五项命名检查（Gate G3） |
-| 论文中的数字 | 每次都从最新结果重新读 | 冻结到 `frozen_numbers.json`；要改某个数字，须先记录原因再重新冻结（Gate G4） |
-| 探索成本 | 每一步都写完整报告和审计 | `lean` 只保留 manifest、决策、探针和运行摘要；`submission` 才增加冻结、论文和三项终审 |
-| 何时算"完成" | 过一遍 QA 即可 | 三个独立终审，任何一个不通过都不能提交（Gate G6） |
-| 被淘汰的方法 | 留在主目录里 | 自动移入 `workspace/archived/`，避免误用进论文 |
-
-## 整条流程
-
-```text
-workflow-orchestrator（读取 interaction_mode + rigor_profile）
- ▼  problem-parser → problem-classifier → related-paper-analyzer       [ G1: PROBLEM_FRAMED ]
- ▼  symbol-table-builder + model-assumptions-builder + data-auditor-cleaner
- ▼  使用者先选取向/风险/预算 → method-selector
-       主方法 + 可信 baseline + 可触发备用
-       风险探针（包含输出集中度）                                      [ G2: METHOD_SCREENED  ★ ]
- ▼  ── 使用者来拍板选哪个方法 + 写为什么 ──────────────────────────────  [ G2.5: 拍板 👤 ]
- ▼  model-code-analyzer → {python,matlab}-model-code-generator
- ▼  code-reviewer（router）→ 命名检查 JSON review                    [ G3: CODE_AND_EXPERIMENT_REVIEWED ]
- ▼  result-report-generator（只在决策点/最终轮写报告）
- ▼  robustness-checker → final-method-explainer
- ▼  ── 使用者选择继续 / 调整 / 启用备用 ──────────────────────────────  [ G4: 判定 👤 ]
- ▼  figure-table-planner → math-figure-generator（render_check）
- ▼  rigor_profile 切换为 submission
- ▼  solution-package-builder ── 生成 frozen_numbers.json              [ G4: RESULTS_FROZEN   ★ ]
- ▼  paper-section-writer                                               [ G5: PAPER_SECTION_READY ]
- ▼  paper-polisher → reference-manager
- ▼  独立审计层（三个必须全 PASS）：
-       consistency-auditor · completeness-auditor · quality-assurance-auditor
-                                                                       [ G6: AUDIT_LAYER_PASSED ]
- ▼  终稿组装
-```
-
-★ 标的是两个承重边界：G2 在完整实现前发现假设、集中度、可行性和规模问题；G4 防止旧数字进入论文。👤 标的是由使用者负责的判断。
 
 ## 28 个 skill，按所在阶段划分
 
@@ -244,14 +165,7 @@ project/
 
 </details>
 
-## 不做什么
 
-- 不会一键生成整篇论文。
-- 不会编造缺失的数据、结果或引用。
-- 在结果跑出来之前，不会在论文中写入带数字的结论。
-- 在缺少 baseline 和稳健性分析时，不会下"我们的模型更好"这类结论。
-- 不改动原始数据。
-- 不替使用者做建模决策，方法仍由使用者决定。
 
 ## 相关文档
 
@@ -261,15 +175,6 @@ project/
 - [docs/matlab-beita-tianyuan-guidelines.md](docs/matlab-beita-tianyuan-guidelines.md) — 如何让 MATLAB 代码在比赛环境中正常运行。
 - 单个 skill：[.claude/skills/](.claude/skills/) · [.codex/skills/](.codex/skills/)。
 
-## 联系方式
 
-如有 bug、建议，或想分享比赛中的使用体验，欢迎邮件 **[zjzhang0424@gmail.com](mailto:zjzhang0424@gmail.com)**，也欢迎提 issue 或 PR。
 
-## 致谢
 
-- **[nature-skills](https://github.com/Yuan1z0825/nature-skills)** — `math-figure-generator` 借鉴了 `nature-figure` 的图表合约、语义配色、多面板布局思路与 SVG 优先导出。作者 [Yuan1z0825](https://github.com/Yuan1z0825)，MIT。
-- **[figures4papers](https://github.com/ChenLiu-1996/figures4papers)** — `nature-figure` 所基于的生产级绘图脚本。
-
-## License
-
-MIT.
